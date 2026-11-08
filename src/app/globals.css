@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ivory: #ead8b9;
+  --color-gold: #b99655;
+  --color-oxblood: #500609;
+  --color-wine: #760d16;
+  --color-crimson: #a51e2a;
+  --color-ink: #171012;
+  --color-chaouen: #172b4b;
+  --color-velvet: #2a1517;
+
+  --font-sans: var(--font-jost), sans-serif;
+  --font-serif: var(--font-bodoni), serif;
+  --font-script: var(--font-pinyon), cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    line-height: normal;
+  }
+  html,
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    overflow-x: clip;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: var(--color-ivory);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-gold);
+  }
+  ::selection {
+    background: var(--color-crimson);
+    color: var(--color-ivory);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Ornate gilt frame drawn with border-image; set --fw for the border width. */
+  .frame-border {
+    box-sizing: border-box;
+    border: var(--fw, 16px) solid var(--color-wine);
+    border-image: url(/assets/frame.png) 50 / var(--fw, 16px) stretch;
+  }
+
+  /* Word mask used by split headlines. */
+  .split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding: 0.08em 0.03em 0.12em;
+    margin: -0.08em -0.03em -0.12em;
+  }
+
+  .plaster-bg {
+    background: var(--color-oxblood) url(/assets/plaster.png) center / cover no-repeat;
+  }
+
+  .hero-vignette {
+    background: radial-gradient(ellipse 75% 70% at 50% 52%, transparent 30%, rgba(23, 16, 18, 0.55) 100%);
+  }
+
+  .pendant {
+    --pw: clamp(150px, 26vh, 300px);
+    top: -60vh;
+    left: calc(var(--pw) / -2);
+    width: var(--pw);
+  }
+  .pendant-chain {
+    height: calc(112vh - var(--pw) * 3.02);
+    background: url(/assets/chain.png) center bottom / 100% auto repeat-y;
+  }
+  .hero-glow {
+    background: radial-gradient(ellipse 50% 50% at 50% 45%, rgba(236, 170, 90, 0.32), rgba(165, 30, 42, 0.14) 40%, transparent 70%);
+  }
+
+  .exp-stage {
+    background: radial-gradient(ellipse 70% 60% at 30% 60%, rgba(80, 6, 9, 0.75), transparent 75%), var(--color-ink);
+  }
+
+  .herringbone-bg {
+    background: #2a0a0c url(/assets/herringbone.png) center / cover;
+  }
+  .gastro-scrim {
+    background: linear-gradient(180deg, rgba(23, 16, 18, 0.82) 0%, rgba(23, 16, 18, 0.55) 55%, rgba(23, 16, 18, 0.25) 100%);
+  }
+
+  .gal-checker {
+    background: conic-gradient(from 45deg at 50% 50%, #b99655 0 25%, #172b4b 0 50%, #b99655 0 75%, #172b4b 0) 0 0 / 22px 22px;
+  }
+
+  .res-shade {
+    background: linear-gradient(180deg, rgba(23, 16, 18, 0.35), rgba(23, 16, 18, 0.1) 40%, rgba(23, 16, 18, 0.45));
+  }
+
+  .field {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(234, 216, 185, 0.45);
+    color: var(--color-ivory);
+    padding: 10px 0;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-transform: none;
+    outline: none;
+  }
+  .field:focus {
+    border-bottom-color: var(--color-ivory);
+  }
+  .field option {
+    background: var(--color-oxblood);
+  }
 }
