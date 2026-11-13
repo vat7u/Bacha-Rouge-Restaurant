@@ -231,6 +231,57 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             tl.to({}, { duration: 0.5 });
           }
 
+          // Menu doorway: the category titles slide past the pinned BACHA word; the one on the anchor line is lit.
+          const carte = R.querySelector<HTMLElement>("[data-carte]");
+          const carteList = carte?.querySelector<HTMLElement>("[data-carte-list]");
+          const carteAnchor = carte?.querySelector<HTMLElement>("[data-carte-anchor]");
+          const carteLinks = carte ? gsap.utils.toArray<HTMLElement>(carte.querySelectorAll("[data-carte-link]")) : [];
+          let onCarteFocus: ((e: FocusEvent) => void) | undefined;
+          if (motion && carte && carteList && carteAnchor && carteLinks.length > 1) {
+            // Lowest opacity that keeps the faded titles readable (about 4.5:1 on ivory).
+            const DIM = 0.62;
+            // How far to move the list so title i sits on the anchor line (both measured in the same window).
+            const yFor = (i: number) => () => {
+              const item = carteLinks[i].parentElement!;
+              return carteAnchor.offsetTop - (carteList.offsetTop + item.offsetTop + item.offsetHeight / 2);
+            };
+            gsap.set(carteLinks, { transformOrigin: "0% 50%" });
+            const tl = gsap.timeline({
+              defaults: { ease: "power2.inOut", duration: 1 },
+              scrollTrigger: {
+                trigger: carte.querySelector("[data-arch-panel]"),
+                start: "top top",
+                end: "bottom bottom",
+                scrub: SCRUB,
+                invalidateOnRefresh: true,
+                // No inertia: a jump (keyboard focus, anchor link) must land on its title, not fling past it.
+                snap: { snapTo: "labels", inertia: false, duration: { min: 0.2, max: 0.6 }, delay: 0.1, ease: "power1.inOut" },
+              },
+            });
+            tl.set(carteList, { y: yFor(0) }, 0)
+              .set(carteLinks, { opacity: DIM, scale: 0.8 }, 0)
+              .set(carteLinks[0], { opacity: 1, scale: 1 }, 0)
+              .addLabel("c0", 0);
+            // Explicit start and end values: steps share boundaries, so recorded starts would collide.
+            const lit = { opacity: 1, scale: 1 };
+            const dim = { opacity: DIM, scale: 0.8 };
+            const step = { immediateRender: false };
+            for (let i = 1; i < carteLinks.length; i++) {
+              const at = i - 1;
+              tl.fromTo(carteList, { y: yFor(i - 1) }, { y: yFor(i), ...step }, at)
+                .fromTo(carteLinks[i - 1], lit, { ...dim, ...step }, at)
+                .fromTo(carteLinks[i], dim, { ...lit, ...step }, at)
+                .addLabel(`c${i}`, i);
+            }
+            // Tabbing to a title scrolls the scene so that title is the lit one.
+            const st = tl.scrollTrigger!;
+            onCarteFocus = (e) => {
+              const i = carteLinks.indexOf(e.target as HTMLElement);
+              if (i >= 0) window.scrollTo({ top: st.labelToScroll(`c${i}`), behavior: "instant" });
+            };
+            carteList.addEventListener("focusin", onCarteFocus);
+          }
+
           // Gallery: horizontal scroll
           const track = R.querySelector<HTMLElement>("[data-gal-track]");
           if (track) {
@@ -241,6 +292,10 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             tl.to(track, { x: dist, ease: "none", duration: 1 }, 0).fromTo("[data-gal-bar]", { scaleX: 0 }, { scaleX: 1, ease: "none", duration: 1 }, 0);
             if (motion) tl.fromTo("[data-gal-img]", { xPercent: -8 }, { xPercent: 8, ease: "none", duration: 1 }, 0);
           }
+
+          return () => {
+            if (onCarteFocus) carteList?.removeEventListener("focusin", onCarteFocus);
+          };
         },
       );
 

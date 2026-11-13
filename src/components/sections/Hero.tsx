@@ -32,9 +32,8 @@ export function Hero({ locale, t }: { locale: Locale; t: Dictionary }) {
         data-nav=""
         className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-[5vw] py-[26px]"
       >
-        <a href="#top" className="flex items-center gap-3.5">
-          <Image src="/assets/logo.png" alt="Bacha Rouge" width={48} height={48} preload className="block size-12" />
-          <span className="font-serif text-[15px] tracking-[.32em] font-medium">BACHA ROUGE</span>
+        <a href="#top" className="flex items-center">
+          <Image src="/assets/logo.png" alt="Bacha Rouge" width={58} height={58} preload className="block size-[58px]" />
         </a>
         <div className="flex flex-wrap items-center gap-x-[26px] gap-y-2 text-[11px] tracking-[.26em] uppercase">
           <a href="#experience" className="max-[760px]:hidden">{t.nav.experience}</a>
