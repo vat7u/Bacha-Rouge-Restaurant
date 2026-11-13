@@ -1,7 +1,7 @@
 # sections
 
 ## Overview
-One component per landing-page section, in page order. They are static markup plus `data-*` hooks; all animation is applied by [`../motion`](../motion/CLAUDE.md). Only the reservation form is a client component.
+One component per landing-page section, in page order. They are static markup plus `data-*` hooks; all animation is applied by [`../motion`](../motion/CLAUDE.md). Only the reservation form is a client component. Every visible string comes in through a `t` prop (a slice of `Dictionary` from `@/i18n/dictionaries`); `Hero` and `Menu` also take `locale`.
 
 ## Interface
 - `Hero` — [Hero.tsx] nav, `BACHA`/`ROUGE` split title (`HeroWord`), hanging pendant lamp, tagline and CTAs; nav links hide under 760px via CSS.
@@ -19,6 +19,10 @@ One component per landing-page section, in page order. They are static markup pl
 - The `data-*` attributes are a contract with `LandingMotion`; renaming one silently disables its animation.
 - Experience: the first caption is visible, the rest start with `opacity:0; visibility:hidden`; the first label starts at opacity 1, the rest at 0.4.
 - Gastronomy heading carries `data-split-manual` so the generic reveal skips it (the scene timeline animates it).
+- `Experience` pairs `t.chapters[i]` with `PHOTOS[i]`, and `Gallery` pairs `t.frames[i]` with `FRAMES[i]`; the dictionary types fix these lengths at 5 and 7.
+- Decorative French lines (`FLOURISHES`) stay French in every language and carry `lang="fr"`.
+- `ReservationForm` submits language-neutral guest values (`GUEST_VALUES`); only the labels are translated.
+- Contact values come from `CONTACT` in `@/content/contact`.
 - Photos are served from `public/assets/ta/*.jpg`; images use `next/image` with explicit `sizes`.
 - Address, hours, phone, email and Instagram are placeholders awaiting real data.
 

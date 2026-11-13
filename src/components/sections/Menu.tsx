@@ -2,13 +2,11 @@ import Link from "next/link";
 import { words } from "@/components/ui/split";
 import { MENU } from "@/content/menu";
 import { localePath, type Locale } from "@/i18n/config";
-
-// The home page is English-only for now.
-const LOCALE: Locale = "en";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 /** Home-page doorway to the menu: the category titles, each linking to its place on the full menu page. */
-export function Menu() {
-  const menuPath = localePath(LOCALE, "/menu");
+export function Menu({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const menuPath = localePath(locale, "/menu");
   return (
     <section id="carte" className="relative bg-ink">
       <div data-arch-panel="" className="bg-ivory text-ink py-[clamp(90px,11vw,160px)] px-[6vw]">
@@ -17,7 +15,7 @@ export function Menu() {
           className="max-w-[1180px] mx-auto flex items-start gap-x-[clamp(28px,5vw,80px)] gap-y-8 max-[760px]:flex-col"
         >
           <h2 id="carte-title" className="sr-only">
-            Menu
+            {t.nav.menu}
           </h2>
           {/* Decorative: the hero already carries the BACHA ROUGE heading. */}
           <div
@@ -35,7 +33,7 @@ export function Menu() {
               {MENU.map((category) => (
                 <li key={category.id} data-item="">
                   <Link href={`${menuPath}#${category.id}`} className="inline-block text-ink hover:text-crimson">
-                    {category.title[LOCALE]}
+                    {category.title[locale]}
                   </Link>
                 </li>
               ))}
@@ -44,7 +42,7 @@ export function Menu() {
               href={menuPath}
               className="self-start text-[11px] tracking-[.28em] uppercase text-ink hover:text-crimson py-2 border-b border-wine"
             >
-              View the full menu →
+              {t.carte.viewAll} →
             </Link>
           </div>
         </nav>

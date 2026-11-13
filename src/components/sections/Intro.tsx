@@ -1,8 +1,30 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import { Photo } from "@/components/ui/Photo";
 import { W, words } from "@/components/ui/split";
+import { FLOURISHES, type Dictionary, type HeadlinePart } from "@/i18n/dictionaries";
 
-export function Intro() {
+/** Plain parts split into masked words; a coloured part stays one masked unit. */
+function Headline({ parts }: { parts: HeadlinePart[] }) {
+  return parts.map((part, i) => (
+    <Fragment key={i}>
+      {i > 0 && " "}
+      {part.tone === "red" ? (
+        <W>
+          <span className="text-crimson">{part.text}</span>
+        </W>
+      ) : part.tone === "blue" ? (
+        <W>
+          <em className="text-chaouen italic">{part.text}</em>
+        </W>
+      ) : (
+        words(part.text)
+      )}
+    </Fragment>
+  ));
+}
+
+export function Intro({ t }: { t: Dictionary["intro"] }) {
   return (
     <section id="maison" data-intro="" className="relative bg-oxblood">
       <div
@@ -15,30 +37,20 @@ export function Intro() {
               data-split=""
               className="m-0 font-serif font-normal text-[clamp(46px,6.2vw,104px)] leading-[.98] tracking-[-.01em] uppercase text-balance"
             >
-              {words("A")}{" "}
-              <W>
-                <span className="text-crimson">red</span>
-              </W>{" "}
-              {words("room in the")}{" "}
-              <W>
-                <em className="text-chaouen italic">blue</em>
-              </W>{" "}
-              {words("city.")}
+              <Headline parts={t.headline} />
             </h2>
             <div
               data-stagger=""
               className="flex flex-col gap-[18px] max-w-[50ch] text-[16px] leading-[1.75] text-[#3b2a2c] font-light"
             >
               <p data-item="" className="m-0 text-pretty">
-                Chefchaouen is famous for blue. Behind our door, everything turns red — plaster walls the colour of
-                oxblood, velvet on every chair, brass lamps that glow rather than shine.
+                {t.paragraphs[0]}
               </p>
               <p data-item="" className="m-0 text-pretty">
-                Bacha Rouge is a dining room in the old manner: Moroccan cooking served with the ceremony of a vintage
-                European salon. Come for dinner, stay for the evening.
+                {t.paragraphs[1]}
               </p>
-              <div data-item="" className="font-script text-[36px] text-wine leading-[1.2] mt-2">
-                Bienvenue chez Bacha Rouge
+              <div data-item="" lang="fr" className="font-script text-[36px] text-wine leading-[1.2] mt-2">
+                {FLOURISHES.welcome}
               </div>
             </div>
           </div>
@@ -51,7 +63,7 @@ export function Intro() {
               <div data-reveal-img="" className="absolute inset-0">
                 <Photo
                   src="/assets/ta/dining-room.webp"
-                  alt="Dining room with fringed red lamps hanging from a carved plaster ceiling above laid tables and velvet seating"
+                  alt={t.diningAlt}
                   sizes="(max-width: 960px) 60vw, 30vw"
                 />
               </div>
@@ -63,7 +75,7 @@ export function Intro() {
               <div data-reveal-img="" className="absolute inset-0">
                 <Photo
                   src="/assets/ta/signature-dish.webp"
-                  alt="Roasted bird on layered pastry, garnished with blue cornflower petals, against a blue tiled wall"
+                  alt={t.dishAlt}
                   sizes="(max-width: 960px) 56vw, 28vw"
                 />
               </div>
@@ -71,7 +83,7 @@ export function Intro() {
             <div data-speed="0.35" className="absolute left-[4%] top-[6%] w-[30%] h-[26%]">
               <Image
                 src="/assets/fez.png"
-                alt="Red fez with black tassel"
+                alt={t.fezAlt}
                 width={1236}
                 height={1006}
                 sizes="(max-width: 960px) 30vw, 15vw"

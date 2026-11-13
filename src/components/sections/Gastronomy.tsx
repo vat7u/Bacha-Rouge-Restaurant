@@ -1,15 +1,16 @@
 import Image from "next/image";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
+import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 
-export function Gastronomy() {
+export function Gastronomy({ t }: { t: Dictionary["table"] }) {
   return (
     <section id="table" data-gastro="" className="relative h-[320vh] bg-ink">
       <div className="herringbone-bg sticky top-0 h-screen overflow-clip">
         <div className="absolute inset-0 bg-ink/62" />
         <div data-g-photo="" className="absolute inset-0 overflow-hidden">
           <div data-g-photo-img="" className="absolute inset-0">
-            <Photo src="/assets/ta/interior-red-room.jpg" alt="The red dining room: velvet chairs, laid tables and carved masks on oxblood plaster" sizes="100vw" />
+            <Photo src="/assets/ta/interior-red-room.jpg" alt={t.photoAlt} sizes="100vw" />
           </div>
         </div>
         <div data-g-scrim="" className="gastro-scrim absolute inset-0 pointer-events-none" />
@@ -21,14 +22,13 @@ export function Gastronomy() {
             data-split-manual=""
             className="m-0 font-serif font-normal text-[clamp(42px,6.4vw,112px)] leading-[.95] uppercase max-w-[14ch] text-balance"
           >
-            {words("Slow fire, shared table")}
+            {words(t.heading)}
           </h2>
-          <div data-g-fade="" className="font-script text-[clamp(28px,2.6vw,40px)] text-gold leading-[1.1]">
-            servi dans le tajine rouge
+          <div data-g-fade="" lang="fr" className="font-script text-[clamp(28px,2.6vw,40px)] text-gold leading-[1.1]">
+            {FLOURISHES.tagine}
           </div>
           <p data-g-fade="" className="m-0 max-w-[46ch] text-[15px] leading-[1.7] font-light text-pretty">
-            Traditional Moroccan dishes arrive in individual red tagines, slow-cooked and uncovered at the table. The
-            ritual is part of the meal.
+            {t.text}
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export function Gastronomy() {
         >
           <Image
             src="/assets/tagine.png"
-            alt="Red Moroccan tagine"
+            alt={t.tagineAlt}
             width={968}
             height={778}
             sizes="(max-width: 800px) 240px, 30vw"

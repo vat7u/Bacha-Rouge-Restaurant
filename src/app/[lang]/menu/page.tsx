@@ -3,11 +3,16 @@ import { notFound } from "next/navigation";
 import { MenuPage } from "@/components/menu/MenuPage";
 import { MENU_UI } from "@/content/menu/ui";
 import { DEFAULT_LOCALE, isLocale } from "@/i18n/config";
+import { languageAlternates } from "@/i18n/metadata";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/menu">): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
-  return { title: MENU_UI.metaTitle[lang], description: MENU_UI.metaDescription[lang] };
+  return {
+    title: MENU_UI.metaTitle[lang],
+    description: MENU_UI.metaDescription[lang],
+    alternates: languageAlternates(lang, "/menu"),
+  };
 }
 
 export default async function Page({ params }: PageProps<"/[lang]/menu">) {

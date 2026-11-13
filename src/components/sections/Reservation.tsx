@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
+import { CONTACT } from "@/content/contact";
+import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 import { ReservationForm } from "./ReservationForm";
 
 const ARCHES = [
@@ -26,7 +28,7 @@ function Info({ label, children }: { label: string; children: ReactNode }) {
 
 const VALUE = "text-[15px] leading-[1.6] font-light";
 
-export function Reservation() {
+export function Reservation({ t }: { t: Dictionary["reservation"] }) {
   return (
     <section id="reserver" data-res="" className="relative bg-oxblood overflow-clip">
       <div className="plaster-bg absolute inset-0" />
@@ -44,10 +46,12 @@ export function Reservation() {
               data-split=""
               className="m-0 font-serif font-normal text-[clamp(46px,6.2vw,104px)] leading-[.95] uppercase text-balance"
             >
-              {words("Your table is waiting")}
+              {words(t.heading)}
             </h2>
-            <div className="font-script text-[38px] text-gold leading-none">à très bientôt</div>
-            <ReservationForm />
+            <div lang="fr" className="font-script text-[38px] text-gold leading-none">
+              {FLOURISHES.farewell}
+            </div>
+            <ReservationForm t={t.form} />
           </div>
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-10 content-start">
@@ -56,38 +60,38 @@ export function Reservation() {
               className="relative col-span-full h-[clamp(340px,36vw,520px)] rounded-[999px_999px_0_0] overflow-hidden max-w-[420px] w-full justify-self-center"
             >
               <div data-reveal-img="" className="absolute inset-0">
-                <Photo src="/assets/ta/02.jpg" alt="Entrance" sizes="420px" />
+                <Photo src="/assets/ta/02.jpg" alt={t.entranceAlt} sizes="420px" />
               </div>
             </div>
             <div data-stagger="" className="flex flex-col gap-[22px]">
-              <Info label="Address">
+              <Info label={t.address}>
                 <span className={VALUE}>
-                  [Street address]
+                  {CONTACT.street}
                   <br />
-                  Chefchaouen, Morocco
+                  {t.city}
                 </span>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Bacha+Rouge+Chefchaouen"
+                  href={CONTACT.mapsUrl}
                   target="_blank"
                   rel="noopener"
                   className="text-[11px] tracking-[.24em] uppercase self-start border-b border-gold pb-[3px] mt-1"
                 >
-                  Directions
+                  {t.directions}
                 </a>
               </Info>
-              <Info label="Hours">
-                <span className={VALUE}>[Opening days &amp; hours]</span>
+              <Info label={t.hours}>
+                <span className={VALUE}>{t.hoursValue}</span>
               </Info>
             </div>
             <div data-stagger="" className="flex flex-col gap-[22px]">
-              <Info label="Telephone">
-                <span className={VALUE}>[+212 ··· ··· ···]</span>
+              <Info label={t.telephone}>
+                <span className={VALUE}>{CONTACT.phone}</span>
               </Info>
-              <Info label="Email">
-                <span className={VALUE}>[reservations@…]</span>
+              <Info label={t.email}>
+                <span className={VALUE}>{CONTACT.email}</span>
               </Info>
-              <Info label="Instagram">
-                <span className={VALUE}>[@handle]</span>
+              <Info label={t.instagram}>
+                <span className={VALUE}>{CONTACT.instagram}</span>
               </Info>
             </div>
           </div>

@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import type { Locale } from "@/i18n/config";
+import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 
 function HeroWord({ word, side }: { word: string; side: "l" | "r" }) {
   return (
@@ -14,7 +17,7 @@ function HeroWord({ word, side }: { word: string; side: "l" | "r" }) {
   );
 }
 
-export function Hero() {
+export function Hero({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <section
       id="top"
@@ -33,11 +36,12 @@ export function Hero() {
           <Image src="/assets/logo.png" alt="Bacha Rouge" width={48} height={48} preload className="block size-12" />
           <span className="font-serif text-[15px] tracking-[.32em] font-medium">BACHA ROUGE</span>
         </a>
-        <div className="flex items-center gap-[26px] text-[11px] tracking-[.26em] uppercase">
-          <a href="#experience" className="max-[760px]:hidden">Experience</a>
-          <a href="#carte" className="max-[760px]:hidden">Menu</a>
-          <a href="#galerie" className="max-[760px]:hidden">Gallery</a>
-          <a href="#reserver" className="px-[18px] py-2.5 border border-ivory/55">Reserve</a>
+        <div className="flex flex-wrap items-center gap-x-[26px] gap-y-2 text-[11px] tracking-[.26em] uppercase">
+          <a href="#experience" className="max-[760px]:hidden">{t.nav.experience}</a>
+          <a href="#carte" className="max-[760px]:hidden">{t.nav.menu}</a>
+          <a href="#galerie" className="max-[760px]:hidden">{t.nav.gallery}</a>
+          <LanguageSwitcher locale={locale} path="/" label={t.nav.language} tone="dark" />
+          <a href="#reserver" className="px-[18px] py-2.5 border border-ivory/55">{t.nav.reserve}</a>
         </div>
       </nav>
 
@@ -62,7 +66,7 @@ export function Hero() {
               />
               <Image
                 src="/assets/lamp.png"
-                alt="Bacha Rouge pendant lamp"
+                alt={t.hero.lampAlt}
                 width={440}
                 height={1493}
                 sizes="300px"
@@ -78,21 +82,21 @@ export function Hero() {
         data-hero-copy=""
         className="absolute inset-x-0 bottom-[5vh] z-[4] flex flex-col items-center gap-4 px-[6vw] text-center max-[760px]:bottom-[3vh]"
       >
-        <div data-hero-fade="" className="font-script text-[clamp(28px,2.6vw,38px)] text-gold leading-none">
-          Chefchaouen · Maroc
+        <div data-hero-fade="" lang="fr" className="font-script text-[clamp(28px,2.6vw,38px)] text-gold leading-none">
+          {FLOURISHES.place}
         </div>
         <p data-hero-fade="" className="m-0 max-w-[44ch] text-[15px] leading-[1.65] font-light text-pretty">
-          A theatrical dining room of red plaster, velvet and brass in the heart of the blue city.
+          {t.hero.tagline}
         </p>
         <div data-hero-fade="" className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5 mt-1.5">
           <a
             href="#reserver"
             className="bg-ivory text-oxblood px-[30px] py-4 text-[11px] tracking-[.28em] uppercase font-medium hover:bg-gold hover:text-ink"
           >
-            Reserve a table
+            {t.hero.reserve}
           </a>
           <a href="#maison" className="text-[11px] tracking-[.28em] uppercase py-2 border-b border-gold">
-            Step inside
+            {t.hero.stepInside}
           </a>
         </div>
       </div>

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MENU, type MenuItem, type MenuSection } from "@/content/menu";
 import { MENU_UI } from "@/content/menu/ui";
-import { LOCALE_NAMES, LOCALES, localePath, type Locale } from "@/i18n/config";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { localePath, type Locale } from "@/i18n/config";
 
 function Price({ amount, locale }: { amount: number; locale: Locale }) {
   return (
@@ -60,31 +61,11 @@ export function MenuPage({ locale }: { locale: Locale }) {
   return (
     <div id="top" className="min-h-screen bg-ivory text-ink font-sans">
       <header className="mx-auto max-w-[760px] px-5 pt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-        {/* The home page is English-only for now, so every language links to `/`. */}
-        <Link href="/" aria-label={MENU_UI.home[locale]} className="flex items-center gap-3 text-ink hover:text-wine">
+        <Link href={localePath(locale, "/")} aria-label={MENU_UI.home[locale]} className="flex items-center gap-3 text-ink hover:text-wine">
           <Image src="/assets/logo.png" alt="" width={40} height={40} className="block size-10" />
           <span className="font-serif text-[14px] tracking-[.3em] font-medium">BACHA ROUGE</span>
         </Link>
-        <nav aria-label={MENU_UI.languageLabel[locale]}>
-          <ul className="list-none m-0 p-0 flex gap-1 text-[14px] tracking-[.12em] uppercase">
-            {LOCALES.map((l) => (
-              <li key={l}>
-                <Link
-                  href={localePath(l, "/menu")}
-                  hrefLang={l}
-                  lang={l}
-                  aria-label={LOCALE_NAMES[l]}
-                  aria-current={l === locale ? "page" : undefined}
-                  className={`flex items-center justify-center min-w-11 min-h-11 px-2 hover:text-wine ${
-                    l === locale ? "text-wine font-medium underline underline-offset-8" : "text-ink"
-                  }`}
-                >
-                  {l}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <LanguageSwitcher locale={locale} path="/menu" label={MENU_UI.languageLabel[locale]} tone="light" />
       </header>
 
       <div className="mx-auto max-w-[760px] px-5 pt-10 pb-6">

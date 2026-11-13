@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 
 const LABEL = "flex flex-col gap-1.5 text-[10.5px] tracking-[.26em] uppercase text-gold";
-const GUESTS = ["2 guests", "1 guest", "3 guests", "4 guests", "5 guests", "6+ guests"];
+/** Submitted values, language-neutral; labels come from `t.guestOptions` in the same order. */
+const GUEST_VALUES = ["2", "1", "3", "4", "5", "6+"];
 
-export function ReservationForm() {
+export function ReservationForm({ t }: { t: Dictionary["reservation"]["form"] }) {
   const [sent, setSent] = useState(false);
 
   // No booking backend yet: the request is only acknowledged on screen.
@@ -17,9 +19,11 @@ export function ReservationForm() {
   if (sent) {
     return (
       <div className="flex flex-col gap-2.5 py-7 border-y border-gold/50">
-        <div className="font-serif text-[26px] tracking-[.06em]">MERCI.</div>
+        <div lang="fr" className="font-serif text-[26px] tracking-[.06em]">
+          {FLOURISHES.thanks}
+        </div>
         <p className="m-0 text-[15px] leading-[1.7] font-light">
-          Your request has been received. We will confirm your table shortly.
+          {t.thanks}
         </p>
       </div>
     );
@@ -32,31 +36,33 @@ export function ReservationForm() {
       className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-x-8 gap-y-[26px] mt-3 [color-scheme:dark]"
     >
       <label data-item="" className={LABEL}>
-        Name
+        {t.name}
         <input required type="text" name="name" autoComplete="name" className="field" />
       </label>
       <label data-item="" className={LABEL}>
-        Phone or email
+        {t.contact}
         <input required type="text" name="contact" className="field" />
       </label>
       <label data-item="" className={LABEL}>
-        Date
+        {t.date}
         <input required type="date" name="date" className="field" />
       </label>
       <label data-item="" className={LABEL}>
-        Time
+        {t.time}
         <input required type="time" name="time" className="field" />
       </label>
       <label data-item="" className={LABEL}>
-        Guests
+        {t.guests}
         <select name="guests" className="field">
-          {GUESTS.map((g) => (
-            <option key={g}>{g}</option>
+          {GUEST_VALUES.map((value, i) => (
+            <option key={value} value={value}>
+              {t.guestOptions[i]}
+            </option>
           ))}
         </select>
       </label>
       <label data-item="" className={LABEL}>
-        Occasion / note
+        {t.note}
         <input type="text" name="note" className="field" />
       </label>
       <div data-item="" className="col-span-full flex mt-2">
@@ -64,7 +70,7 @@ export function ReservationForm() {
           type="submit"
           className="border-0 cursor-pointer bg-ivory text-oxblood px-9 py-[18px] text-[11px] tracking-[.28em] uppercase font-medium font-sans hover:bg-gold hover:text-ink"
         >
-          Request a reservation
+          {t.submit}
         </button>
       </div>
     </form>

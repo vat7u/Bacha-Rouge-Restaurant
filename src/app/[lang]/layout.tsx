@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import { DEFAULT_LOCALE, isLocale, LOCALES } from "@/i18n/config";
+import { metadataBase } from "@/i18n/metadata";
 import { fontVariables } from "../fonts";
 import "../globals.css";
+
+export const metadata: Metadata = { metadataBase };
 
 // English is served by the (en) root layout; this one covers the prefixed languages.
 export function generateStaticParams() {

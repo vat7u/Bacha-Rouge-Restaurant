@@ -1,7 +1,7 @@
 # Bacha Rouge Blueprint
 
 ## System Overview
-Marketing site for Bacha Rouge, a red-plaster dining room in Chefchaouen. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, GSAP + ScrollTrigger (`@gsap/react`) and `lucide-react` (installed, not yet used). The home page `/` is statically prerendered and made of eight stacked sections; a separate read-only menu page (`/menu`, `/fr/menu`, `/es/menu`) lists every dish from `src/content/menu` and is also opened on guests' phones in the restaurant. On the home page, a single client component, `LandingMotion`, attaches every scroll animation by finding `data-*` hooks in the markup. Design source: the Claude Design handoff `Bacha Rouge.dc.html`.
+Marketing site for Bacha Rouge, a red-plaster dining room in Chefchaouen. Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, GSAP + ScrollTrigger (`@gsap/react`) and `lucide-react` (installed, not yet used). Every page exists in English, French and Spanish: the home page (`/`, `/fr`, `/es`) is statically prerendered and made of eight stacked sections, and a separate read-only menu page (`/menu`, `/fr/menu`, `/es/menu`) lists every dish from `src/content/menu` and is also opened on guests' phones in the restaurant. On the home page, a single client component, `LandingMotion`, attaches every scroll animation by finding `data-*` hooks in the markup. Design source: the Claude Design handoff `Bacha Rouge.dc.html`.
 
 > **Next.js 16 warning** (from `AGENTS.md`): APIs differ from older versions. Read the relevant guide in `node_modules/next/dist/docs/` before writing Next.js code, and heed deprecation notices (e.g. `priority` on `next/image` is replaced by `preload`).
 
@@ -16,6 +16,7 @@ Marketing site for Bacha Rouge, a red-plaster dining room in Chefchaouen. Built 
 - Animation hooks are `data-*` attributes shared between `src/components/sections` and `src/components/motion`; change both sides together.
 - Animations must respect `prefers-reduced-motion` and the 760px mobile breakpoint through `gsap.matchMedia`.
 - Design tokens (colours, fonts) are defined once in `src/app/globals.css`; do not hard-code new palette values in components.
+- Home-page text lives in `src/i18n/dictionaries` (one file per language, same typed shape); do not write visible text directly in components.
 - Menu URLs (`/menu`, `/fr/menu`, `/es/menu`) and their category anchors (`#salads` … `#drinks`) are meant for QR codes: treat them as permanent.
 - The menu page stays free of GSAP and client JavaScript.
 - Static images live under `public/assets` and are referenced by absolute `/assets/...` URLs.
@@ -24,7 +25,8 @@ Marketing site for Bacha Rouge, a red-plaster dining room in Chefchaouen. Built 
 - Fonts (Bodoni Moda, Jost, Pinyon Script) are fetched and self-hosted at build time by `next/font/google`.
 - The reservation form does not transmit data; submitting only flips a local "sent" state.
 - Address, hours, phone, email and Instagram are placeholders until real details are supplied.
-- The home page is English-only; only the menu page is translated so far (French and Spanish home pages are the next phase).
+- French and Spanish copy was translated without a native-speaker review; have it proofread before launch.
+- Search-engine language links (hreflang) are emitted only when `NEXT_PUBLIC_SITE_URL` is set; there is no sitemap yet.
 
 ## System Verification
 - Run: `npm run lint` and `npm run build` (no test runner is configured); `npm run dev` serves at http://localhost:3000.
