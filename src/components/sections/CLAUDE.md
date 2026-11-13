@@ -1,13 +1,13 @@
 # sections
 
 ## Overview
-One component per landing-page section, in page order. They are static markup plus `data-*` hooks; all animation is applied by [`../motion`](../motion/CLAUDE.md). Only the reservation form is a client component. Every visible string comes in through a `t` prop (a slice of `Dictionary` from `@/i18n/dictionaries`); `Hero` and `Menu` also take `locale`.
+One component per landing-page section, in page order. They are static markup plus `data-*` hooks; all animation is applied by [`../motion`](../motion/CLAUDE.md). Only the reservation form is a client component. Every visible string comes in through a `t` prop (a slice of `Dictionary` from `@/i18n/dictionaries`); `Hero`, `Gastronomy` and `Menu` also take `locale`.
 
 ## Interface
 - `Hero` — [Hero.tsx] nav, `BACHA`/`ROUGE` split title (`HeroWord`), hanging pendant lamp, tagline and CTAs; nav links hide under 760px via CSS.
 - `Intro` — [Intro.tsx] "La Maison" on the ivory arch panel with three photos, the fez and a spinning ornament.
 - `Experience` — [Experience.tsx] pinned "The five experiences" scene driven by the `CHAPTERS` array (label, script title, subtitle, text and photo per experience; copy from `docs/bacha-rouge-five-experiences.md`). The arch is framed by two nested CSS borders (`data-exp-frame`) and a diamond keystone (`data-exp-gem`).
-- `Gastronomy` — [Gastronomy.tsx] pinned "La Table" scene with circular photo reveal and the tagine, which drops in at the centre then slides left (animated in `LandingMotion`).
+- `Gastronomy` — [Gastronomy.tsx] pinned "La Table" scene (`280vh`) with circular photo reveal and the tagine, which drops in at the centre then slides left, followed by a list of four signature Moroccan dishes (names and prices read from `@/content/menu` by id, each linking to `/menu#moroccan-specialties`). Takes `locale` and `t`; throws at build if a dish id is missing from the menu (animated in `LandingMotion`).
 - `Menu` — [Menu.tsx] doorway to the menu: a decorative "BACHA" word beside the category titles from `MENU` (`@/content/menu`), each linking to `/menu#<category id>`, plus a link to the full menu. Keeps `id="carte"` and the ivory arch panel. With motion allowed the panel is `300vh` with a sticky stage, and `LandingMotion` slides the titles past the word (one lit at a time); with reduced motion or no script it is a short, fully visible list. Under 760px the word sits above the titles.
 - `Gallery` — [Gallery.tsx] horizontal track built from the `FRAMES` array plus a closing "COME IN." block.
 - `Reservation` — [Reservation.tsx] arch ornament, headline, `ReservationForm`, entrance photo and `Info` blocks (address, hours, phone, email, Instagram placeholders).

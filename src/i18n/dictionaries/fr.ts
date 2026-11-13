@@ -68,6 +68,8 @@ export const fr: Dictionary = {
     text: "Les plats marocains traditionnels arrivent dans des tajines rouges individuels, mijotés lentement et découverts à table. Le rituel fait partie du repas.",
     photoAlt: "La salle rouge : chaises en velours, tables dressées et masques sculptés sur un plâtre sang-de-bœuf",
     tagineAlt: "Tajine marocain rouge",
+    dishesLabel: "Du plat en terre cuite",
+    fullMenu: "Voir toutes les spécialités marocaines",
   },
   carte: { viewAll: "Voir le menu complet" },
   gallery: {

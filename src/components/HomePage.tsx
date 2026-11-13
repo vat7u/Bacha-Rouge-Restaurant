@@ -18,7 +18,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Hero locale={locale} t={t} />
       <Intro t={t.intro} />
       <Experience t={t.experience} />
-      <Gastronomy t={t.table} />
+      <Gastronomy locale={locale} t={t.table} />
       <Menu locale={locale} t={t} />
       <Gallery t={t.gallery} />
       <Reservation t={t.reservation} />

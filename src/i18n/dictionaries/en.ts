@@ -68,6 +68,8 @@ export const en: Dictionary = {
     text: "Traditional Moroccan dishes arrive in individual red tagines, slow-cooked and uncovered at the table. The ritual is part of the meal.",
     photoAlt: "The red dining room: velvet chairs, laid tables and carved masks on oxblood plaster",
     tagineAlt: "Red Moroccan tagine",
+    dishesLabel: "From the clay pot",
+    fullMenu: "See all Moroccan specialties",
   },
   carte: { viewAll: "View the full menu" },
   gallery: {

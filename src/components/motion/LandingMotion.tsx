@@ -228,7 +228,19 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             const tagineX = mobile ? 0 : "-34vw";
             if (motion) tl.to("[data-g-tagine]", { x: tagineX, duration: 1, ease: "power2.inOut" }, 1.4);
             else gsap.set("[data-g-tagine]", { x: tagineX });
-            tl.to({}, { duration: 0.5 });
+            // The signature dishes panel, then its rows, rise in once the tagine has moved aside.
+            tl.fromTo("[data-g-dishes]", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 2.0).fromTo(
+              "[data-g-dish]",
+              { opacity: 0, y: motion ? 24 : 0 },
+              { opacity: 1, y: 0, stagger: 0.12, duration: 0.6 },
+              2.1,
+            );
+            // On narrow screens the list takes the tagine's place at the bottom.
+            if (mobile) {
+              if (motion) tl.to("[data-g-tagine]", { autoAlpha: 0, duration: 0.5 }, 2.0);
+              else gsap.set("[data-g-tagine]", { autoAlpha: 0 });
+            }
+            tl.to({}, { duration: 0.6 });
           }
 
           // Menu doorway: the category titles slide past the pinned BACHA word; the one on the anchor line is lit.

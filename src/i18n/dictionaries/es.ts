@@ -68,6 +68,8 @@ export const es: Dictionary = {
     text: "Los platos marroquíes tradicionales llegan en tajines rojos individuales, cocinados a fuego lento y destapados en la mesa. El ritual forma parte de la comida.",
     photoAlt: "La sala roja: sillas de terciopelo, mesas puestas y máscaras talladas sobre yeso rojo sangre de toro",
     tagineAlt: "Tajín marroquí rojo",
+    dishesLabel: "De la olla de barro",
+    fullMenu: "Ver todas las especialidades marroquíes",
   },
   carte: { viewAll: "Ver el menú completo" },
   gallery: {

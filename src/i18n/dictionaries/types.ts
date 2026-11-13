@@ -19,7 +19,7 @@ export type Dictionary = {
   hero: { tagline: string; reserve: string; stepInside: string; lampAlt: string };
   intro: { headline: HeadlinePart[]; paragraphs: [string, string]; diningAlt: string; dishAlt: string; fezAlt: string };
   experience: { heading: string; chapters: Five<Chapter>; maskAlt: string };
-  table: { heading: string; text: string; photoAlt: string; tagineAlt: string };
+  table: { heading: string; text: string; photoAlt: string; tagineAlt: string; dishesLabel: string; fullMenu: string };
   carte: { viewAll: string };
   gallery: { heading: string; frames: Seven<GalleryFrame>; comeIn: string; reserve: string };
   reservation: {
