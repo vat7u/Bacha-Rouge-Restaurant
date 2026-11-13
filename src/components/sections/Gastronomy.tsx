@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 
@@ -16,7 +15,6 @@ export function Gastronomy() {
         <div data-g-scrim="" className="gastro-scrim absolute inset-0 pointer-events-none" />
 
         <div className="absolute inset-x-0 top-[clamp(80px,13vh,140px)] z-[3] flex flex-col items-center gap-[18px] px-[6vw] text-center pointer-events-none">
-          <Eyebrow data-g-fade="" numeral="III" label="La Table" tone="gold" />
           <h2
             data-g-head=""
             data-split=""

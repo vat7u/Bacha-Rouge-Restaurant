@@ -1,4 +1,3 @@
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 
@@ -33,7 +32,6 @@ export function Gallery() {
       <div className="sticky top-0 h-screen overflow-clip">
         <div className="absolute inset-x-[6vw] top-[clamp(64px,9vh,100px)] z-[2] flex flex-wrap items-end justify-between gap-x-10 gap-y-3">
           <div className="flex flex-col gap-3">
-            <Eyebrow numeral="V" label="Gallery" tone="gold" />
             <h2 data-split="" className="m-0 font-serif font-normal text-[clamp(30px,3.8vw,60px)] leading-none uppercase">
               {words("An evening, in frames")}
             </h2>

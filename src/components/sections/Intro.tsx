@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Photo } from "@/components/ui/Photo";
 import { W, words } from "@/components/ui/split";
 
@@ -12,7 +11,6 @@ export function Intro() {
       >
         <div className="max-w-[1320px] mx-auto grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-[clamp(56px,7vw,120px)] items-center">
           <div className="flex flex-col gap-8">
-            <Eyebrow numeral="I" label="La Maison" tone="wine" />
             <h2
               data-split=""
               className="m-0 font-serif font-normal text-[clamp(46px,6.2vw,104px)] leading-[.98] tracking-[-.01em] uppercase text-balance"

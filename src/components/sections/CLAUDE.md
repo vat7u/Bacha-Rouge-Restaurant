@@ -8,7 +8,7 @@ One component per landing-page section, in page order. They are static markup pl
 - `Intro` — [Intro.tsx] "La Maison" on the ivory arch panel with three photos, the fez and a spinning ornament.
 - `Experience` — [Experience.tsx] pinned "The five experiences" scene driven by the `CHAPTERS` array (label, script title, subtitle, text and photo per experience; copy from `docs/bacha-rouge-five-experiences.md`). The arch is framed by two nested CSS borders (`data-exp-frame`) and a diamond keystone (`data-exp-gem`).
 - `Gastronomy` — [Gastronomy.tsx] pinned "La Table" scene with circular photo reveal and the tagine, which drops in at the centre then slides left (animated in `LandingMotion`).
-- `Menu` — [Menu.tsx] "La Carte" with `COURSES` and a shared `PLACEHOLDER` dish; draws two `FrameRect` borders.
+- `Menu` — [Menu.tsx] doorway to the menu: a decorative "BACHA" word beside the category titles from `MENU` (`@/content/menu`), each linking to `/menu#<category id>`, plus a link to the full menu. Keeps `id="carte"` and the ivory arch panel.
 - `Gallery` — [Gallery.tsx] horizontal track built from the `FRAMES` array plus a closing "COME IN." block.
 - `Reservation` — [Reservation.tsx] arch ornament, headline, `ReservationForm`, entrance photo and `Info` blocks (address, hours, phone, email, Instagram placeholders).
 - `ReservationForm` — [ReservationForm.tsx] `"use client"` form with `sent` state.
@@ -20,7 +20,7 @@ One component per landing-page section, in page order. They are static markup pl
 - Experience: the first caption is visible, the rest start with `opacity:0; visibility:hidden`; the first label starts at opacity 1, the rest at 0.4.
 - Gastronomy heading carries `data-split-manual` so the generic reveal skips it (the scene timeline animates it).
 - Photos are served from `public/assets/ta/*.jpg`; images use `next/image` with explicit `sizes`.
-- Menu content, address, hours, phone, email and Instagram are placeholders awaiting real data.
+- Address, hours, phone, email and Instagram are placeholders awaiting real data.
 
 ## Side Effects
 - `ReservationForm`: `onSubmit` calls `preventDefault()` and sets `sent`; no network request is made, so nothing reaches the restaurant yet.

@@ -1,4 +1,3 @@
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 
@@ -54,7 +53,6 @@ export function Experience() {
       <div className="exp-stage sticky top-0 h-screen overflow-clip grid grid-rows-[auto_minmax(0,1fr)] gap-[3vh] px-[6vw] pt-[clamp(56px,8vh,96px)] pb-[4vh]">
         <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
           <div className="flex flex-col gap-3.5">
-            <Eyebrow numeral="II" label="Bacha Rouge" tone="gold" />
             <h2
               data-split=""
               className="m-0 font-serif font-normal text-[clamp(30px,3.8vw,60px)] leading-none uppercase"

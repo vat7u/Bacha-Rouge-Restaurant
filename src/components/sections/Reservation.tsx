@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 import { ReservationForm } from "./ReservationForm";
@@ -41,7 +40,6 @@ export function Reservation() {
 
         <div className="max-w-[1320px] w-full mx-auto grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-[clamp(56px,7vw,120px)]">
           <div className="flex flex-col gap-7">
-            <Eyebrow numeral="VI" label="Réserver" tone="gold" />
             <h2
               data-split=""
               className="m-0 font-serif font-normal text-[clamp(46px,6.2vw,104px)] leading-[.95] uppercase text-balance"
