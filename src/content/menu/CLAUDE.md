@@ -23,6 +23,7 @@ The restaurant menu as data: one file per category, each dish holding its Englis
 - Prices are numbers in dirhams; the "Dhs" label is added when rendering.
 - Drinks is one category with titled sections (Hot and Cozy, Fresh Juices, Healthy Corner, Mocktails, Mojitos, Water & Sodas). The Mojitos section carries the "Alcohol-free." note.
 - Moroccan dish names keep the spelling used in each language's source file.
+- The home page's `Gastronomy` section looks up four Moroccan specialties by item `id`: `chicken-tagine-with-preserved-lemon`, `lamb-shank-tagine`, `beef-tagine-with-prunes-and-almonds` and `marrakech-tanjia-1-kg` (its list is `SIGNATURE_IDS` in `components/sections/Gastronomy.tsx`). Renaming or removing one of these fails the build until that list is updated.
 
 ## Side Effects
 - `validateMenu(MENU)` runs when `index.ts` is first imported and throws, failing the build, on missing text in any language, a non-positive or non-numeric price, an empty section, or a duplicate or malformed id.

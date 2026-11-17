@@ -30,12 +30,26 @@ export type Dictionary = {
     hours: string;
     hoursValue: string;
     telephone: string;
-    email: string;
     instagram: string;
     entranceAlt: string;
+    /** Labels for the two numbers on the Telephone line. */
+    phones: { whatsapp: string; phone: string };
+    /** Labels around the reviews strip; the quotes themselves live in `@/content/reviews` (English only). */
+    reviews: {
+      /** Accessible name of the carousel region. */
+      region: string;
+      previous: string;
+      next: string;
+      seeAll: string;
+      /** Read after the Google link, e.g. "(opens in a new tab)". */
+      newTab: string;
+      /** Star label; `{n}` is replaced by the star count. */
+      stars: string;
+      /** Small line telling visitors where the quotes come from and that they stay in English. */
+      source: string;
+    };
     form: {
       name: string;
-      contact: string;
       date: string;
       time: string;
       guests: string;
@@ -43,7 +57,17 @@ export type Dictionary = {
       guestOptions: Six<string>;
       note: string;
       submit: string;
-      thanks: string;
+      /** Shown after submit. Nothing reaches the restaurant until the guest presses Send in WhatsApp. */
+      sentTitle: string;
+      sentText: string;
+      openAgain: string;
+      noWhatsapp: string;
+      edit: string;
+      copy: string;
+      copied: string;
+      copyFailed: string;
+      /** WhatsApp message pieces: a greeting line after `[Website]`, and the label for the note line. */
+      message: { greeting: string; note: string };
     };
   };
   footer: { backToTop: string };

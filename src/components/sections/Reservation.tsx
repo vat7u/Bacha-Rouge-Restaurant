@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
+import { GiltFrame } from "@/components/ui/GiltFrame";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
-import { CONTACT } from "@/content/contact";
+import { CONTACT, telLink, waLink } from "@/content/contact";
+import type { Locale } from "@/i18n/config";
 import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 import { ReservationForm } from "./ReservationForm";
+import { ReviewsStrip } from "./ReviewsStrip";
 
 const ARCHES = [
   "M2 30 V14 A10 10 0 0 1 22 14 V30",
@@ -28,19 +31,25 @@ function Info({ label, children }: { label: string; children: ReactNode }) {
 
 const VALUE = "text-[15px] leading-[1.6] font-light";
 
-export function Reservation({ t }: { t: Dictionary["reservation"] }) {
+export function Reservation({ locale, t }: { locale: Locale; t: Dictionary["reservation"] }) {
   return (
-    <section id="reserver" data-res="" className="relative bg-oxblood overflow-clip">
+    <section data-res="" className="relative bg-oxblood overflow-clip">
       <div className="plaster-bg absolute inset-0" />
       <div className="res-shade absolute inset-0" />
-      <div className="relative pt-[clamp(90px,11vw,160px)] px-[6vw] pb-[clamp(80px,9vw,130px)] flex flex-col gap-[clamp(56px,7vw,100px)]">
+      <div className="relative pt-[clamp(90px,11vw,160px)] px-[6vw] pb-[clamp(80px,9vw,130px)] flex flex-col gap-[clamp(32px,4vw,48px)]">
         <svg data-draw="" viewBox="0 0 250 30" fill="none" stroke="#B99655" className="self-center w-[min(100%,500px)] h-auto">
           {ARCHES.map((d) => (
             <path key={d} d={d} pathLength="1" strokeDasharray="1" />
           ))}
         </svg>
 
-        <div className="max-w-[1320px] w-full mx-auto grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-[clamp(56px,7vw,120px)]">
+        <ReviewsStrip t={t.reviews} />
+
+        {/* `#reserver` sits here, not on the section, so every "Reserve" link lands on the form rather than the reviews. */}
+        <div
+          id="reserver"
+          className="max-w-[1320px] w-full mx-auto grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-[clamp(56px,7vw,120px)]"
+        >
           <div className="flex flex-col gap-7">
             <h2
               data-split=""
@@ -51,18 +60,20 @@ export function Reservation({ t }: { t: Dictionary["reservation"] }) {
             <div lang="fr" className="font-script text-[38px] text-gold leading-none">
               {FLOURISHES.farewell}
             </div>
-            <ReservationForm t={t.form} />
+            <ReservationForm locale={locale} t={t.form} />
           </div>
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] gap-10 content-start">
-            <div
-              data-reveal="up"
-              className="relative col-span-full h-[clamp(340px,36vw,520px)] rounded-[999px_999px_0_0] overflow-hidden max-w-[420px] w-full justify-self-center"
+            <GiltFrame
+              shape="square"
+              className="relative col-span-full w-[min(100%,440px)] justify-self-center"
+              sizes="(max-width: 480px) 100vw, 440px"
+              openingProps={{ "data-reveal": "up" }}
             >
               <div data-reveal-img="" className="absolute inset-0">
-                <Photo src="/assets/ta/02.jpg" alt={t.entranceAlt} sizes="420px" />
+                <Photo src="/assets/ta/02.jpg" alt={t.entranceAlt} sizes="(max-width: 480px) 62vw, 280px" />
               </div>
-            </div>
+            </GiltFrame>
             <div data-stagger="" className="flex flex-col gap-[22px]">
               <Info label={t.address}>
                 <span className={VALUE}>
@@ -85,13 +96,19 @@ export function Reservation({ t }: { t: Dictionary["reservation"] }) {
             </div>
             <div data-stagger="" className="flex flex-col gap-[22px]">
               <Info label={t.telephone}>
-                <span className={VALUE}>{CONTACT.phone}</span>
-              </Info>
-              <Info label={t.email}>
-                <span className={VALUE}>{CONTACT.email}</span>
+                <a href={waLink()} target="_blank" rel="noopener" className={`${VALUE} self-start hover:text-gold`}>
+                  <span className="block text-[10px] tracking-[.2em] uppercase text-ivory/70">{t.phones.whatsapp}</span>
+                  <span className="whitespace-nowrap">{CONTACT.whatsappDisplay}</span>
+                </a>
+                <a href={telLink(CONTACT.phone)} className={`${VALUE} self-start mt-1.5 hover:text-gold`}>
+                  <span className="block text-[10px] tracking-[.2em] uppercase text-ivory/70">{t.phones.phone}</span>
+                  <span className="whitespace-nowrap">{CONTACT.phoneDisplay}</span>
+                </a>
               </Info>
               <Info label={t.instagram}>
-                <span className={VALUE}>{CONTACT.instagram}</span>
+                <a href={CONTACT.instagramUrl} target="_blank" rel="noopener" className={`${VALUE} self-start hover:text-gold`}>
+                  {CONTACT.instagramHandle}
+                </a>
               </Info>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Fragment } from "react";
+import { GiltFrame } from "@/components/ui/GiltFrame";
 import { Photo } from "@/components/ui/Photo";
 import { W, words } from "@/components/ui/split";
 import { FLOURISHES, type Dictionary, type HeadlinePart } from "@/i18n/dictionaries";
@@ -15,7 +16,7 @@ function Headline({ parts }: { parts: HeadlinePart[] }) {
         </W>
       ) : part.tone === "blue" ? (
         <W>
-          <em className="text-chaouen italic">{part.text}</em>
+          <em className="text-ink italic">{part.text}</em>
         </W>
       ) : (
         words(part.text)
@@ -56,18 +57,20 @@ export function Intro({ t }: { t: Dictionary["intro"] }) {
           </div>
 
           <div className="relative h-[clamp(520px,64vw,860px)]">
-            <div
-              data-reveal="up"
-              className="absolute right-0 top-0 h-[84%] aspect-[2/3] rounded-[999px_999px_0_0] overflow-hidden"
+            <GiltFrame
+              shape="arch"
+              className="absolute right-0 top-0 h-[84%]"
+              sizes="(max-width: 960px) 60vw, 30vw"
+              openingProps={{ "data-reveal": "up" }}
             >
               <div data-reveal-img="" className="absolute inset-0">
                 <Photo
                   src="/assets/ta/dining-room.webp"
                   alt={t.diningAlt}
-                  sizes="(max-width: 960px) 60vw, 30vw"
+                  sizes="(max-width: 960px) 40vw, 20vw"
                 />
               </div>
-            </div>
+            </GiltFrame>
             <div
               data-reveal="left"
               className="frame-border [--fw:18px] absolute left-0 bottom-0 w-[56%] aspect-[3/2] overflow-hidden"

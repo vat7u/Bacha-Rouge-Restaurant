@@ -2,10 +2,12 @@
 
 import { useRef, type ReactNode } from "react";
 import gsap from "gsap";
+import { Flip } from "gsap/Flip";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { initReviewsCarousel } from "./reviewsCarousel";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, Flip);
 
 // Scrub lag (seconds) for the pinned scenes — the design's "smooth" setting.
 const SCRUB = 1;
@@ -160,14 +162,7 @@ export function LandingMotion({ children }: { children: ReactNode }) {
               defaults: { ease: "power2.inOut" },
               scrollTrigger: { trigger: "[data-exp]", start: "top top", end: "bottom bottom", scrub: SCRUB },
             });
-            tl.fromTo(
-              "[data-exp-frame]",
-              { clipPath: "inset(100% 0% 0% 0%)" },
-              { clipPath: "inset(0% 0% 0% 0%)", duration: 1, stagger: 0.2, ease: "none" },
-              0,
-            )
-              .fromTo("[data-exp-gem]", { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(2)" }, 0.9)
-              .fromTo("[data-exp-progress]", { scaleX: 0 }, { scaleX: 1, duration: last + 1.6, ease: "none" }, 0);
+            tl.fromTo("[data-exp-progress]", { scaleX: 0 }, { scaleX: 1, duration: last + 1.6, ease: "none" }, 0);
             if (motion) {
               tl.fromTo(layers[0].querySelector("[data-exp-img]"), { scale: 1.2 }, { scale: 1, duration: 1.2, ease: "none" }, 0);
             }
@@ -305,8 +300,14 @@ export function LandingMotion({ children }: { children: ReactNode }) {
             if (motion) tl.fromTo("[data-gal-img]", { xPercent: -8 }, { xPercent: 8, ease: "none", duration: 1 }, 0);
           }
 
+          // Reviews strip: Next / Previous / swipe rotate the real cards with Flip, or instantly
+          // when motion is reduced. Wired in both cases, so it sits outside every `if (motion)`.
+          const reviews = R.querySelector<HTMLElement>("[data-rv]");
+          const stopReviews = reviews ? initReviewsCarousel(reviews, { motion }) : undefined;
+
           return () => {
             if (onCarteFocus) carteList?.removeEventListener("focusin", onCarteFocus);
+            stopReviews?.();
           };
         },
       );

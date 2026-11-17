@@ -23,5 +23,4 @@ export const FLOURISHES = {
   gallery: "la galerie",
   door: "la porte est ouverte",
   farewell: "à très bientôt",
-  thanks: "MERCI.",
 } as const;

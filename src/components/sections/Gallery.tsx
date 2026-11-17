@@ -1,8 +1,10 @@
+import { GiltFrame } from "@/components/ui/GiltFrame";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 import { FLOURISHES, type Dictionary } from "@/i18n/dictionaries";
 
 // Alt text and captions come from the dictionary, matched to these frames by index.
+// Arches use the gilt arch `GiltFrame`, whose width follows from `size` (a height) and the frame's aspect ratio.
 type Frame = {
   src: string;
   shape: "arch" | "framed";
@@ -12,19 +14,16 @@ type Frame = {
 };
 
 const FRAMES: Frame[] = [
-  { src: "/assets/ta/06.jpg", shape: "arch", size: "w-[clamp(240px,30vw,500px)] h-[min(58vh,560px)]", sizes: "(max-width: 800px) 290px, 36vw" },
+  { src: "/assets/ta/06.jpg", shape: "arch", size: "h-[min(62vh,600px)]", sizes: "(max-width: 800px) 260px, 26vw" },
   { src: "/assets/ta/01.jpg", shape: "framed", size: "w-[clamp(200px,22vw,360px)] h-[min(38vh,380px)]", sizes: "(max-width: 900px) 240px, 26vw", align: "self-end" },
   { src: "/assets/ta/16.jpg", shape: "framed", size: "w-[clamp(280px,38vw,620px)] h-[min(52vh,520px)]", sizes: "(max-width: 740px) 340px, 46vw" },
-  { src: "/assets/ta/21.jpg", shape: "arch", size: "w-[clamp(190px,20vw,330px)] h-[min(44vh,440px)]", sizes: "(max-width: 950px) 230px, 24vw", align: "self-start" },
+  { src: "/assets/ta/21.jpg", shape: "arch", size: "h-[min(48vh,470px)]", sizes: "(max-width: 950px) 200px, 20vw", align: "self-start" },
   { src: "/assets/ta/19.jpg", shape: "framed", size: "w-[clamp(240px,28vw,460px)] h-[min(34vh,340px)]", sizes: "(max-width: 860px) 290px, 34vw", align: "self-end" },
-  { src: "/assets/ta/18.jpg", shape: "arch", size: "w-[clamp(240px,28vw,440px)] h-[min(58vh,560px)]", sizes: "(max-width: 860px) 290px, 34vw" },
+  { src: "/assets/ta/18.jpg", shape: "arch", size: "h-[min(62vh,600px)]", sizes: "(max-width: 860px) 260px, 26vw" },
   { src: "/assets/ta/10.jpg", shape: "framed", size: "w-[clamp(230px,26vw,420px)] h-[min(42vh,420px)]", sizes: "(max-width: 890px) 280px, 32vw" },
 ];
 
-const SHAPE = {
-  arch: "rounded-[999px_999px_0_0]",
-  framed: "frame-border [--fw:20px] shadow-[0_30px_60px_rgba(0,0,0,.35)]",
-};
+const FRAMED = "frame-border [--fw:20px] shadow-[0_30px_60px_rgba(0,0,0,.35)]";
 
 export function Gallery({ t }: { t: Dictionary["gallery"] }) {
   return (
@@ -47,11 +46,19 @@ export function Gallery({ t }: { t: Dictionary["gallery"] }) {
         >
           {FRAMES.map((f, i) => (
             <figure key={f.src} className={`m-0 flex-none flex flex-col gap-3 ${f.align ?? ""}`}>
-              <div className={`relative overflow-hidden ${f.size} ${SHAPE[f.shape]}`}>
-                <div data-gal-img="" className="absolute inset-y-0 left-[-12%] right-[-12%]">
-                  <Photo src={f.src} alt={t.frames[i].alt} sizes={f.sizes} />
+              {f.shape === "arch" ? (
+                <GiltFrame shape="arch" className={`relative ${f.size}`} sizes={f.sizes}>
+                  <div data-gal-img="" className="absolute inset-y-0 left-[-12%] right-[-12%]">
+                    <Photo src={f.src} alt={t.frames[i].alt} sizes={f.sizes} />
+                  </div>
+                </GiltFrame>
+              ) : (
+                <div className={`relative overflow-hidden ${f.size} ${FRAMED}`}>
+                  <div data-gal-img="" className="absolute inset-y-0 left-[-12%] right-[-12%]">
+                    <Photo src={f.src} alt={t.frames[i].alt} sizes={f.sizes} />
+                  </div>
                 </div>
-              </div>
+              )}
               <figcaption className="text-[11px] tracking-[.24em] uppercase">
                 <span className="text-gold">{String(i + 1).padStart(2, "0")}</span> — {t.frames[i].caption}
               </figcaption>

@@ -21,7 +21,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Gastronomy locale={locale} t={t.table} />
       <Menu locale={locale} t={t} />
       <Gallery t={t.gallery} />
-      <Reservation t={t.reservation} />
+      <Reservation locale={locale} t={t.reservation} />
       <Footer t={t.footer} />
     </LandingMotion>
   );

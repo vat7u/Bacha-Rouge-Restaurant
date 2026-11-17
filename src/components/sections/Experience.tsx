@@ -1,3 +1,4 @@
+import { GiltFrame } from "@/components/ui/GiltFrame";
 import { Photo } from "@/components/ui/Photo";
 import { words } from "@/components/ui/split";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -12,7 +13,7 @@ const PHOTOS = [
   "/assets/ta/05.jpg",
 ];
 
-const PHOTO_SIZES = "(max-width: 760px) 90vw, 36vw";
+const PHOTO_SIZES = "(max-width: 760px) 45vw, 20vw";
 
 export function Experience({ t }: { t: Dictionary["experience"] }) {
   const chapters = t.chapters.map((chapter, i) => ({ ...chapter, src: PHOTOS[i] }));
@@ -43,24 +44,14 @@ export function Experience({ t }: { t: Dictionary["experience"] }) {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-x-[10vw] gap-y-[3vh] min-h-0">
-          <div className="relative h-[min(64vh,70vw)] aspect-[1.1]">
-            {/* Arched gilt frame: two nested borders and a keystone, drawn bottom-up as the scene starts. */}
-            <div
-              data-exp-frame=""
-              className="absolute -inset-[18px] rounded-t-[999px] border border-gold/60 pointer-events-none"
-            />
-            <div
-              data-exp-frame=""
-              className="absolute -inset-[9px] rounded-t-[999px] border-2 border-gold shadow-[0_0_48px_rgba(185,150,85,.2),inset_0_0_18px_rgba(0,0,0,.45)] pointer-events-none"
-            />
-            <div
-              data-exp-gem=""
-              className="absolute inset-x-0 -top-[24px] z-[3] flex justify-center pointer-events-none"
+          {/* Square gilt frame; it stays still while the chapter photos change inside it. */}
+          <div className="relative h-[min(68vh,80vw)] aspect-[789/977]">
+            <GiltFrame
+              shape="square"
+              className="absolute inset-0"
+              sizes="(max-width: 760px) 65vw, 30vw"
+              openingProps={{ className: "bg-velvet" }}
             >
-              <span className="block size-[11px] rotate-45 bg-gold ring-[5px] ring-ink" />
-            </div>
-
-            <div className="absolute inset-0 rounded-t-[999px] overflow-hidden bg-velvet">
               {chapters.map((c) => (
                 <div key={c.src} data-exp-layer="" className="absolute inset-0 overflow-hidden">
                   <div data-exp-img="" className="absolute inset-0">
@@ -68,10 +59,10 @@ export function Experience({ t }: { t: Dictionary["experience"] }) {
                   </div>
                 </div>
               ))}
-            </div>
+            </GiltFrame>
             <div
               data-exp-mask=""
-              className="frame-border [--fw:16px] absolute right-[-21%] top-[8%] w-[38%] aspect-[0.78] z-[2] overflow-hidden shadow-[0_30px_50px_rgba(0,0,0,.45)]"
+              className="frame-border [--fw:16px] absolute right-[-29%] top-[8%] w-[52%] max-[760px]:right-[-14%] max-[760px]:w-[44%] aspect-[0.78] z-[2] overflow-hidden shadow-[0_30px_50px_rgba(0,0,0,.45)]"
             >
               <Photo src="/assets/ta/11.jpg" alt={t.maskAlt} sizes="(max-width: 760px) 25vw, 15vw" />
             </div>
